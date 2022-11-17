@@ -7,7 +7,7 @@ bs = BeautifulSoup(res.content, 'html.parser')
 # print(bs)
 
 #1페이지 제목 스크랩 테스트
-list = bs.find_all('div',{'class' : 'subject_txt'})
+title_list = bs.find_all('div',{'class' : 'subject_txt'})
 
-for i in list:
+for i in title_list:
     print(i.getText())
