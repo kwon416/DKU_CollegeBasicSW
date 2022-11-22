@@ -9,10 +9,14 @@ class WindowClass(QMainWindow, form_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pushButton.clicked.connect(self.buttonFunctionTest)
+        self.dkuBtn.clicked.connect(self.onclick_dku)
+        self.etaBtn.clicked.connect(self.onclick_eta)
 
-    def buttonFunctionTest(self):
-        print("TEST");
+    def onclick_dku(self):
+        print("단대 클릭함")
+
+    def onclick_eta(self):
+        print("에타 클릭함")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
