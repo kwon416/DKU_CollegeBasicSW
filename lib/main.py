@@ -8,7 +8,7 @@ headers = {"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWe
 
 class CrawlingDku:
     menu_list = {'news': '-550', 'notice': '-390', 'today': 'dku-today'}
-    # url_head + menu[] + middle + page + str(pagenum)
+    # usage : url_head + menu[] + middle + page + str(pagenum)
     url_head = "https://www.dankook.ac.kr/web/kor/"
     url_middle = "?p_p_id=Bbs_WAR_bbsportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-2&p_p_col_count=1&_Bbs_WAR_bbsportlet_orderBy=createDate&_Bbs_WAR_bbsportlet_action=view&&_Bbs_WAR_bbsportlet_curPage="
     def __init__(self, pagenum):
@@ -25,6 +25,7 @@ class CrawlingDku:
         title_list = self.bs.find_all('div', {'class': 'subject_txt'})
         for i in title_list:
             print(i.getText())
+        return title_list
 
     def getUrl(self):
         print('------url list------')
@@ -32,6 +33,7 @@ class CrawlingDku:
         title_link = self.bs.find_all('div', {'class': 'plus'})
         for i in title_link:
             print(i.a['href'])
+        return title_link
 
     def getViewCount(self):
         print('------viewcount list------')
@@ -39,6 +41,7 @@ class CrawlingDku:
         r_view = self.bs.find_all('p', {'class': 'r_view'})
         for i in r_view:
             print(i.getText())
+        return r_view
 
     def getDate(self):
         print('------date list------')
@@ -46,6 +49,7 @@ class CrawlingDku:
         date = self.bs.find_all('p', {'class': 'date'})
         for i in date:
             print(i.getText())
+        return date
 
     def getImgUrl(self):
         print('------img url list------')
@@ -53,6 +57,7 @@ class CrawlingDku:
         img_url = self.bs.find_all('div', {'class': 'r_img'})
         for i in img_url:
             print('https://www.dankook.ac.kr/' + i.img['src'])
+        return img_url
 
 class CrawlingNews(CrawlingDku):
     def __init__(self, pagenum):
@@ -69,6 +74,7 @@ class CrawlingNews(CrawlingDku):
         title_list = self.bs.find_all('div', {'class': 'subject_txt'})
         for i in title_list:
             print(i.getText())
+        return title_list
 
     def getUrl(self):
         print('------url list------')
@@ -76,6 +82,7 @@ class CrawlingNews(CrawlingDku):
         title_link = self.bs.find_all('div', {'class': 'plus'})
         for i in title_link:
             print(i.a['href'])
+        return title_link
 
     def getViewCount(self):
         print('------viewcount list------')
@@ -83,6 +90,7 @@ class CrawlingNews(CrawlingDku):
         r_view = self.bs.find_all('p', {'class': 'r_view'})
         for i in r_view:
             print(i.getText())
+        return r_view
 
     def getDate(self):
         print('------date list------')
@@ -90,6 +98,7 @@ class CrawlingNews(CrawlingDku):
         date = self.bs.find_all('p', {'class': 'date'})
         for i in date:
             print(i.getText())
+        return date
 
     def getImgUrl(self):
         print('------img url list------')
@@ -97,6 +106,7 @@ class CrawlingNews(CrawlingDku):
         img_url = self.bs.find_all('div', {'class': 'r_img'})
         for i in img_url:
             print('https://www.dankook.ac.kr/' + i.img['src'])
+        return img_url
 
 class CrawlingNotice(CrawlingDku):
     def __init__(self, pagenum):
@@ -113,6 +123,7 @@ class CrawlingNotice(CrawlingDku):
         title_list = self.bs.find_all('div', {'class': 'subject_txt'})
         for i in title_list:
             print(i.getText())
+        return title_list
 
     def getUrl(self):
         print('------url list------')
@@ -120,6 +131,7 @@ class CrawlingNotice(CrawlingDku):
         title_link = self.bs.find_all('div', {'class': 'subject'})
         for i in title_link:
             print(i.a['href'])
+        return title_link
 
     def getViewCount(self):
         print('------viewcount list------')
@@ -128,7 +140,7 @@ class CrawlingNotice(CrawlingDku):
         for i in r_view:
             i.find('strong').decompose()
             print(i.getText())
-
+        return r_view
     def getDate(self):
         print('------date list------')
         # Dku notice 게시글 등록일자 스크랩
@@ -136,6 +148,7 @@ class CrawlingNotice(CrawlingDku):
         for i in date:
             i.find('strong').decompose()
             print(i.getText())
+        return  date
 
     # def getImgUrl(self):
     #     print('------img url list------')
@@ -143,6 +156,7 @@ class CrawlingNotice(CrawlingDku):
     #     img_url = self.bs.find_all('div', {'class': 'r_img'})
     #     for i in img_url:
     #         print('https://www.dankook.ac.kr/' + i.img['src'])
+    #     return img_url
 
 class CrawlingToday(CrawlingDku):
     def __init__(self, pagenum):
@@ -159,6 +173,7 @@ class CrawlingToday(CrawlingDku):
         title_list = self.bs.find_all('div', {'class': 'subject_txt'})
         for i in title_list:
             print(i.getText())
+        return title_list
 
     def getUrl(self):
         print('------url list------')
@@ -166,6 +181,7 @@ class CrawlingToday(CrawlingDku):
         title_link = self.bs.find_all('div', {'class': 'plus'})
         for i in title_link:
             print(i.a['href'])
+        return title_link
 
     def getViewCount(self):
         print('------viewcount list------')
@@ -173,6 +189,7 @@ class CrawlingToday(CrawlingDku):
         r_view = self.bs.find_all('p', {'class': 'r_view'})
         for i in r_view:
             print(i.getText())
+        return r_view
 
     def getDate(self):
         print('------date list------')
@@ -180,6 +197,7 @@ class CrawlingToday(CrawlingDku):
         date = self.bs.find_all('p', {'class': 'date'})
         for i in date:
             print(i.getText())
+        return date
 
     def getImgUrl(self):
         print('------img url list------')
@@ -187,9 +205,10 @@ class CrawlingToday(CrawlingDku):
         img_url = self.bs.find_all('div', {'class': 'r_img'})
         for i in img_url:
             print('https://www.dankook.ac.kr/' + i.img['src'])
+        return img_url
 
 
-t = CrawlingNotice(1)
+t = CrawlingNews(1)
 t.getTitle()
 t.getUrl()
 t.getDate()
