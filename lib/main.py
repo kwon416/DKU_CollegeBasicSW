@@ -21,43 +21,53 @@ class CrawlingDku:
 
     def getTitle(self):
         print('------title list------')
+        result=[]
         # 제목 스크랩
         title_list = self.bs.find_all('div', {'class': 'subject_txt'})
         for i in title_list:
             print(i.getText())
-        return title_list
+            result.append(i.getText())
+        return result
 
     def getUrl(self):
         print('------url list------')
+        result = []
         # 게시글 링크 스크랩
         title_link = self.bs.find_all('div', {'class': 'plus'})
         for i in title_link:
             print(i.a['href'])
-        return title_link
+            result.append(i.a['href'])
+        return result
 
     def getViewCount(self):
         print('------viewcount list------')
+        result = []
         # 게시글 조회수 스크랩
         r_view = self.bs.find_all('p', {'class': 'r_view'})
         for i in r_view:
             print(i.getText())
-        return r_view
+            result.append(i.getText())
+        return result
 
     def getDate(self):
         print('------date list------')
+        result = []
         # 게시글 등록일자 스크랩
         date = self.bs.find_all('p', {'class': 'date'})
         for i in date:
             print(i.getText())
-        return date
+            result.append(i.getText())
+        return result
 
     def getImgUrl(self):
         print('------img url list------')
+        result = []
         # 게시글 이미지 url 스크랩
         img_url = self.bs.find_all('div', {'class': 'r_img'})
         for i in img_url:
             print('https://www.dankook.ac.kr/' + i.img['src'])
-        return img_url
+            result.append('https://www.dankook.ac.kr/' + i.img['src'])
+        return result
 
 class CrawlingNews(CrawlingDku):
     def __init__(self, pagenum):
@@ -70,43 +80,53 @@ class CrawlingNews(CrawlingDku):
 
     def getTitle(self):
         print('------title list------')
+        result = []
         # Dku news 페이지 제목 스크랩
         title_list = self.bs.find_all('div', {'class': 'subject_txt'})
         for i in title_list:
             print(i.getText())
-        return title_list
+            result.append(i.getText())
+        return result
 
     def getUrl(self):
         print('------url list------')
+        result = []
         # Dku news 게시글 링크 스크랩
         title_link = self.bs.find_all('div', {'class': 'plus'})
         for i in title_link:
             print(i.a['href'])
-        return title_link
+            result.append(i.a['href'])
+        return result
 
     def getViewCount(self):
         print('------viewcount list------')
+        result = []
         # Dku news 게시글 조회수 스크랩
         r_view = self.bs.find_all('p', {'class': 'r_view'})
         for i in r_view:
             print(i.getText())
-        return r_view
+            result.append(i.getText())
+        return result
 
     def getDate(self):
         print('------date list------')
+        result = []
         # Dku news 게시글 등록일자 스크랩
         date = self.bs.find_all('p', {'class': 'date'})
         for i in date:
             print(i.getText())
-        return date
+            result.append(i.getText())
+        return result
 
     def getImgUrl(self):
         print('------img url list------')
+        result = []
         # Dku news 게시글 이미지 url 스크랩
         img_url = self.bs.find_all('div', {'class': 'r_img'})
         for i in img_url:
             print('https://www.dankook.ac.kr/' + i.img['src'])
-        return img_url
+            result.append('https://www.dankook.ac.kr/' + i.img['src'])
+        return result
 
 class CrawlingNotice(CrawlingDku):
     def __init__(self, pagenum):
@@ -119,44 +139,54 @@ class CrawlingNotice(CrawlingDku):
 
     def getTitle(self):
         print('------title list------')
+        result = []
         # Dku notice 페이지 제목 스크랩
         title_list = self.bs.find_all('div', {'class': 'subject_txt'})
         for i in title_list:
             print(i.getText())
-        return title_list
+            result.append(i.getText())
+        return result
 
     def getUrl(self):
         print('------url list------')
+        result = []
         # Dku notice 게시글 링크 스크랩
         title_link = self.bs.find_all('div', {'class': 'subject'})
         for i in title_link:
             print(i.a['href'])
-        return title_link
+            result.append(i.a['href'])
+        return result
 
     def getViewCount(self):
         print('------viewcount list------')
+        result = []
         # Dku notice 게시글 조회수 스크랩
         r_view = self.bs.find_all('span', {'class': 'table_hit'})
         for i in r_view:
             i.find('strong').decompose()
             print(i.getText())
-        return r_view
+            result.append(i.getText())
+        return result
     def getDate(self):
         print('------date list------')
+        result = []
         # Dku notice 게시글 등록일자 스크랩
         date = self.bs.find_all('span', {'class': 'table_date'})
         for i in date:
             i.find('strong').decompose()
             print(i.getText())
-        return  date
+            result.append(i.getText())
+        return  result
 
     # def getImgUrl(self):
     #     print('------img url list------')
+    #     result=[]
     #     # Dku notice 게시글 이미지 url 스크랩
     #     img_url = self.bs.find_all('div', {'class': 'r_img'})
     #     for i in img_url:
     #         print('https://www.dankook.ac.kr/' + i.img['src'])
-    #     return img_url
+    #     result.append('https://www.dankook.ac.kr/' + i.img['src'])
+    #     return result
 
 class CrawlingToday(CrawlingDku):
     def __init__(self, pagenum):
@@ -169,48 +199,50 @@ class CrawlingToday(CrawlingDku):
 
     def getTitle(self):
         print('------title list------')
+        result = []
         # Dku today 페이지 제목 스크랩
         title_list = self.bs.find_all('div', {'class': 'subject_txt'})
         for i in title_list:
             print(i.getText())
-        return title_list
+            result.append(i.getText())
+        return result
 
     def getUrl(self):
         print('------url list------')
+        result = []
         # Dku news 게시글 링크 스크랩
         title_link = self.bs.find_all('div', {'class': 'plus'})
         for i in title_link:
             print(i.a['href'])
-        return title_link
+            result.append(i.a['href'])
+        return result
 
     def getViewCount(self):
         print('------viewcount list------')
+        result = []
         # Dku news 게시글 조회수 스크랩
         r_view = self.bs.find_all('p', {'class': 'r_view'})
         for i in r_view:
             print(i.getText())
-        return r_view
+            result.append(i.getText())
+        return result
 
     def getDate(self):
         print('------date list------')
+        result = []
         # Dku news 게시글 등록일자 스크랩
         date = self.bs.find_all('p', {'class': 'date'})
         for i in date:
             print(i.getText())
-        return date
+            result.append(i.getText())
+        return result
 
     def getImgUrl(self):
         print('------img url list------')
+        result = []
         # Dku news 게시글 이미지 url 스크랩
         img_url = self.bs.find_all('div', {'class': 'r_img'})
         for i in img_url:
             print('https://www.dankook.ac.kr/' + i.img['src'])
-        return img_url
-
-
-t = CrawlingNews(1)
-t.getTitle()
-t.getUrl()
-t.getDate()
-t.getViewCount()
-t.getImgUrl()
+            result.append('https://www.dankook.ac.kr/' + i.img['src'])
+        return result
