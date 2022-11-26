@@ -2,33 +2,47 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 
-form_class_home = uic.loadUiType("home.ui")[0]
-form_class_dkuMenu = uic.loadUiType("dku_menu.ui")[0]
-
-class WindowClass(QMainWindow, form_class_home):
+class HomeUI(QDialog):
     def __init__(self):
         super().__init__()
-        self.setupUi(self)
-        self.dkuBtn.clicked.connect(self.onclick_dku)
-        self.etaBtn.clicked.connect(self.onclick_eta)
-
-    def onclick_dku(self):
-        self.hide()
-        self.second = DkuMenu()
-        self.second.exec()
-        self.show()
-
-    def onclick_eta(self):
-        print("에타 클릭함")
-
-class DkuMenu(QDialog, QWidget, form_class_dkuMenu):
+        uic.loadUi("home.ui", self)
+        self.newsBtn.clicked.connect(self.onclick_newsBtn)
+        self.todayBtn.clicked.connect(self.onclick_todayBtn)
+        self.noticeBtn.clicked.connect(self.onclick_noticeBtn)
+    def onclick_newsBtn(self):
+        widget.setCurrentWidget(UI.TEST)
+    def onclick_todayBtn(self):
+        pass
+    def onclick_noticeBtn(self):
+        pass
+class TestUI(QDialog):
     def __init__(self):
-        super(DkuMenu, self).__init__()
-        self.setupUi(self)
-        self.show()
+        super().__init__()
+        uic.loadUi("test.ui", self)
+        self.testBtn.clicked.connect(self.onclick_testBtn)
+
+    def onclick_testBtn(self):
+        widget.setCurrentWidget(UI.HOME)
+
+class UI:
+    HOME : HomeUI
+    TEST : TestUI
+    @staticmethod
+    def init():
+        UI.HOME = HomeUI()
+        UI.TEST = TestUI()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    myWindow = WindowClass()
-    myWindow.show()
+
+    UI.init()
+
+    widget = QStackedWidget()
+    widget.addWidget(UI.HOME)
+    widget.addWidget(UI.TEST)
+
+    widget.setFixedSize(464, 284)
+
+    widget.show()
+
     app.exec_()
