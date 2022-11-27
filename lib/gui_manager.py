@@ -25,7 +25,7 @@ class HomeUI(QDialog):
 class NewsUI(QDialog):
 
     ARTICLE_COUNT = 10
-
+    
     def __init__(self):
         super().__init__()
         uic.loadUi(UI_DIR + "news.ui", self)
