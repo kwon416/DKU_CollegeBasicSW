@@ -1,7 +1,10 @@
 import sys
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 from PyQt5 import uic
+from PyQt5.QtCore import Qt
 import main as crawl
+import urllib.request
 
 UI_DIR = "../ui/"
 
@@ -20,21 +23,39 @@ class HomeUI(QDialog):
         pass
 
 class NewsUI(QDialog):
+
+    ARTICLE_COUNT = 10
+    
     def __init__(self):
         super().__init__()
         uic.loadUi(UI_DIR + "news.ui", self)
         self.backBtn.clicked.connect(self.onclick_backBtn)
         data = crawl.CrawlingNews(1)
-        for i in range(10):
-            self.table.setItem(i, 0, QTableWidgetItem(data.getImgUrl()[i]))
-        for i in range(10):
-            self.table.setItem(i, 1, QTableWidgetItem(data.getTitle()[i]))
-        for i in range(10):
-            self.table.setItem(i, 2, QTableWidgetItem(data.getUrl()[i]))
-        for i in range(10):
-            self.table.setItem(i, 3, QTableWidgetItem(data.getViewCount()[i]))
-        for i in range(10):
-            self.table.setItem(i, 4, QTableWidgetItem(data.getDate()[i]))
+        h_layouts = [QHBoxLayout() for i in range(NewsUI.ARTICLE_COUNT)]
+        for i in range(NewsUI.ARTICLE_COUNT):
+            img_url = data.getImgUrl()[i]
+            img_data = urllib.request.urlopen(img_url).read()
+            pixmap = QPixmap()
+            pixmap.loadFromData(img_data)
+            img_label = QLabel() # 이미지 레이블
+            img_label.setPixmap(pixmap.scaled(100, 100, Qt.KeepAspectRatio))
+
+            title_label = QLabel() # 제목 레이블
+            title_label.setText(data.getTitle()[i])
+
+            viewcount_label = QLabel() # 조회수 레이블
+            viewcount_label.setText(data.getViewCount()[i])
+
+            date_label = QLabel()
+            date_label.setText(data.getDate()[i])
+
+            h_layouts[i].addWidget(img_label)
+            h_layouts[i].addWidget(title_label)
+            h_layouts[i].addWidget(viewcount_label)
+            h_layouts[i].addWidget(date_label)
+
+        for layout in h_layouts:
+            self.vboxLayout.addLayout(layout)
 
     def onclick_backBtn(self):
         widget.setCurrentWidget(UI.HOME)
@@ -56,7 +77,7 @@ if __name__ == "__main__":
     widget.addWidget(UI.HOME)
     widget.addWidget(UI.NEWS)
 
-    widget.setFixedSize(582, 409)
+    widget.setFixedSize(585, 536)
 
     widget.show()
 
