@@ -1,7 +1,9 @@
 import sys
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 from PyQt5 import uic
 import main as crawl
+import urllib.request
 
 UI_DIR = "../ui/"
 
@@ -26,7 +28,16 @@ class NewsUI(QDialog):
         self.backBtn.clicked.connect(self.onclick_backBtn)
         data = crawl.CrawlingNews(1)
         for i in range(10):
-            self.table.setItem(i, 0, QTableWidgetItem(data.getImgUrl()[i]))
+            url = data.getImgUrl()[i]
+            self.table.setItem(i, 0, QTableWidgetItem(url))
+            imgData = urllib.request.urlopen(url).read()
+
+            lbl = QLabel(self)
+            pixmap = QPixmap()
+            pixmap.loadFromData(imgData)
+            lbl.setPixmap(pixmap)
+
+
         for i in range(10):
             self.table.setItem(i, 1, QTableWidgetItem(data.getTitle()[i]))
         for i in range(10):
