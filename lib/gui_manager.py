@@ -59,6 +59,7 @@ class NewsUI(QDialog):
             title_label.setText(data.getTitle()[i])
             title_label.setFixedSize(350, 40)
 
+
             date_viewcount_layout = QVBoxLayout()  # 날짜/조회수 묶어서 한 레이아웃으로.
 
             date_label = QLabel(data.getDate()[i])
@@ -70,6 +71,7 @@ class NewsUI(QDialog):
 
             date_viewcount_layout.addWidget(date_label)
             date_viewcount_layout.addWidget(viewcount_label)
+
 
             link_btn = QPushButton("보기")
             link_btn.setFixedSize(40, 40)
@@ -90,6 +92,12 @@ class NewsUI(QDialog):
         btn : QPushButton = self.sender()
         i = int(btn.text())
         self.init_articleBox(i)
+
+    def onclick_linkBtn(self, url):
+        btn : QPushButton = self.sender()
+        i = btn.property("id")
+        url = self.data.getUrl()[i]
+        webbrowser.open(url)
 
 class UI:
     HOME : HomeUI
