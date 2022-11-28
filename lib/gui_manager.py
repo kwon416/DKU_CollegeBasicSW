@@ -31,8 +31,12 @@ class NewsUI(QDialog):
         super().__init__()
         uic.loadUi(UI_DIR + "news.ui", self)
         self.backBtn.clicked.connect(self.onclick_backBtn)
-        data = crawl.CrawlingNews(1)
+
+        self.data = crawl.CrawlingNews(1)
+        data = self.data
+
         h_layouts = [QHBoxLayout() for i in range(NewsUI.ARTICLE_COUNT)]
+
         for i in range(NewsUI.ARTICLE_COUNT):
             img_url = data.getImgUrl()[i]
             img_data = urllib.request.urlopen(img_url).read()
@@ -59,7 +63,8 @@ class NewsUI(QDialog):
 
             link_btn = QPushButton("보기")
             link_btn.setFixedSize(40, 40)
-            link_btn.clicked.connect(lambda: self.onclick_linkBtn(data.getUrl()[i]))
+            link_btn.setProperty("id", i)
+            link_btn.clicked.connect(self.onclick_linkBtn)
 
             h_layouts[i].addWidget(img_label)
             h_layouts[i].addWidget(title_label)
@@ -73,6 +78,9 @@ class NewsUI(QDialog):
         widget.setCurrentWidget(UI.HOME)
 
     def onclick_linkBtn(self, url):
+        btn : QPushButton = self.sender()
+        i = btn.property("id")
+        url = self.data.getUrl()[i]
         webbrowser.open(url)
 
 class UI:
