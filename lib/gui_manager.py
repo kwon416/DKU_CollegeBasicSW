@@ -42,14 +42,16 @@ class NewsUI(QDialog):
 
             title_label = QLabel() # 제목 레이블
             title_label.setText(data.getTitle()[i])
-            title_label.setFixedSize(300, 40)
+            title_label.setFixedSize(350, 40)
 
             date_viewcount_layout = QVBoxLayout() # 날짜/조회수 묶어서 한 레이아웃으로.
 
             date_label = QLabel(data.getDate()[i])
-            date_label.setFixedSize(80, 40)
             viewcount_label = QLabel(data.getViewCount()[i]+"회") # 조회수 레이블
-            viewcount_label.setFixedSize(40, 40)
+            font = date_label.font()
+            font.setPointSize(8)
+            date_label.setFont(font)
+            viewcount_label.setFont(font)
 
             date_viewcount_layout.addWidget(date_label)
             date_viewcount_layout.addWidget(viewcount_label)
