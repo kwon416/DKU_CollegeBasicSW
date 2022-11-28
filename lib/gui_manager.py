@@ -42,17 +42,25 @@ class NewsUI(QDialog):
 
             title_label = QLabel() # 제목 레이블
             title_label.setText(data.getTitle()[i])
+            title_label.setFixedSize(300, 40)
 
-            viewcount_label = QLabel() # 조회수 레이블
-            viewcount_label.setText(data.getViewCount()[i])
+            date_viewcount_layout = QVBoxLayout() # 날짜/조회수 묶어서 한 레이아웃으로.
 
-            date_label = QLabel()
-            date_label.setText(data.getDate()[i])
+            date_label = QLabel(data.getDate()[i])
+            date_label.setFixedSize(80, 40)
+            viewcount_label = QLabel(data.getViewCount()[i]+"회") # 조회수 레이블
+            viewcount_label.setFixedSize(40, 40)
+
+            date_viewcount_layout.addWidget(date_label)
+            date_viewcount_layout.addWidget(viewcount_label)
+
+            link_btn = QPushButton("보기")
+            link_btn.setFixedSize(40, 40)
 
             h_layouts[i].addWidget(img_label)
             h_layouts[i].addWidget(title_label)
-            h_layouts[i].addWidget(viewcount_label)
-            h_layouts[i].addWidget(date_label)
+            h_layouts[i].addLayout(date_viewcount_layout)
+            h_layouts[i].addWidget(link_btn)
 
         for layout in h_layouts:
             self.vboxLayout.addLayout(layout)
