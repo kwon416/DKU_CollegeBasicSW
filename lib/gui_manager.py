@@ -5,6 +5,7 @@ from PyQt5 import uic
 from PyQt5.QtCore import Qt
 import main as crawl
 import urllib.request
+import webbrowser
 
 UI_DIR = "../ui/"
 
@@ -58,6 +59,7 @@ class NewsUI(QDialog):
 
             link_btn = QPushButton("보기")
             link_btn.setFixedSize(40, 40)
+            link_btn.clicked.connect(lambda: self.onclick_linkBtn(data.getUrl()[i]))
 
             h_layouts[i].addWidget(img_label)
             h_layouts[i].addWidget(title_label)
@@ -69,6 +71,9 @@ class NewsUI(QDialog):
 
     def onclick_backBtn(self):
         widget.setCurrentWidget(UI.HOME)
+
+    def onclick_linkBtn(self, url):
+        webbrowser.open(url)
 
 class UI:
     HOME : HomeUI
