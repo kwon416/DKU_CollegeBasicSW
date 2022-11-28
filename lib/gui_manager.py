@@ -6,6 +6,10 @@ from PyQt5.QtCore import Qt
 import main as crawl
 import urllib.request
 import webbrowser
+import ssl
+from qtutil import QtUtil
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 UI_DIR = "../ui/"
 
@@ -31,24 +35,34 @@ class NewsUI(QDialog):
         super().__init__()
         uic.loadUi(UI_DIR + "news.ui", self)
         self.backBtn.clicked.connect(self.onclick_backBtn)
-        data = crawl.CrawlingNews(1)
-        h_layouts = [QHBoxLayout() for i in range(NewsUI.ARTICLE_COUNT)]
+        self.pageBtn_1.clicked.connect(self.onclick_pageBtn)
+        self.pageBtn_2.clicked.connect(self.onclick_pageBtn)
+        self.pageBtn_3.clicked.connect(self.onclick_pageBtn)
+        self.pageBtn_4.clicked.connect(self.onclick_pageBtn)
+        self.pageBtn_5.clicked.connect(self.onclick_pageBtn)
+        self.init_articleBox(1)
+    def init_articleBox(self, number):
+        self.data = crawl.CrawlingNews(number)
+        data = self.data
+
+        self.h_layouts = [QHBoxLayout() for i in range(NewsUI.ARTICLE_COUNT)]
+
         for i in range(NewsUI.ARTICLE_COUNT):
             img_url = data.getImgUrl()[i]
             img_data = urllib.request.urlopen(img_url).read()
             pixmap = QPixmap()
             pixmap.loadFromData(img_data)
-            img_label = QLabel() # 이미지 레이블
+            img_label = QLabel()  # 이미지 레이블
             img_label.setPixmap(pixmap.scaled(100, 100, Qt.KeepAspectRatio))
 
-            title_label = QLabel() # 제목 레이블
+            title_label = QLabel()  # 제목 레이블
             title_label.setText(data.getTitle()[i])
             title_label.setFixedSize(350, 40)
 
-            date_viewcount_layout = QVBoxLayout() # 날짜/조회수 묶어서 한 레이아웃으로.
+            date_viewcount_layout = QVBoxLayout()  # 날짜/조회수 묶어서 한 레이아웃으로.
 
             date_label = QLabel(data.getDate()[i])
-            viewcount_label = QLabel(data.getViewCount()[i]+"회") # 조회수 레이블
+            viewcount_label = QLabel(data.getViewCount()[i] + "회")  # 조회수 레이블
             font = date_label.font()
             font.setPointSize(8)
             date_label.setFont(font)
@@ -61,19 +75,21 @@ class NewsUI(QDialog):
             link_btn.setFixedSize(40, 40)
             link_btn.clicked.connect(lambda: self.onclick_linkBtn(data.getUrl()[i]))
 
-            h_layouts[i].addWidget(img_label)
-            h_layouts[i].addWidget(title_label)
-            h_layouts[i].addLayout(date_viewcount_layout)
-            h_layouts[i].addWidget(link_btn)
+            self.h_layouts[i].addWidget(img_label)
+            self.h_layouts[i].addWidget(title_label)
+            self.h_layouts[i].addLayout(date_viewcount_layout)
+            self.h_layouts[i].addWidget(link_btn)
 
-        for layout in h_layouts:
+        for layout in self.h_layouts:
             self.vboxLayout.addLayout(layout)
-
     def onclick_backBtn(self):
         widget.setCurrentWidget(UI.HOME)
-
     def onclick_linkBtn(self, url):
         webbrowser.open(url)
+    def onclick_pageBtn(self):
+        btn : QPushButton = self.sender()
+        i = int(btn.text())
+        self.init_articleBox(i)
 
 class UI:
     HOME : HomeUI
@@ -92,7 +108,7 @@ if __name__ == "__main__":
     widget.addWidget(UI.HOME)
     widget.addWidget(UI.NEWS)
 
-    widget.setFixedSize(585, 536)
+    widget.setFixedSize(585, 560)
 
     widget.show()
 
