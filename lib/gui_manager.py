@@ -6,6 +6,9 @@ from PyQt5.QtCore import Qt
 import main as crawl
 import urllib.request
 import webbrowser
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 UI_DIR = "../ui/"
 
