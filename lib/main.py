@@ -18,6 +18,11 @@ class CrawlingDku:
         self.viewCountList = []
         self.dateList = []
         self.imgUrlList = []
+        self.getTitle()
+        self.getUrl()
+        self.getViewCount()
+        self.getDate()
+        self.getImgUrl()
         # self.url = self.url_head + self.url_page + str(pagenum)
         #웹 파싱
         # res = requests.get(self.url, headers=headers)
