@@ -45,7 +45,9 @@ class NewsUI(QDialog):
         self.data = crawl.CrawlingNews(number)
         data = self.data
 
-        self.h_layouts = [QHBoxLayout() for i in range(NewsUI.ARTICLE_COUNT)]
+        QtUtil.clearLayout(self.vboxLayout)
+
+        h_layouts = [QHBoxLayout() for i in range(NewsUI.ARTICLE_COUNT)]
 
         for i in range(NewsUI.ARTICLE_COUNT):
             img_url = data.getImgUrl()[i]
@@ -77,22 +79,19 @@ class NewsUI(QDialog):
             link_btn.setFixedSize(40, 40)
             link_btn.clicked.connect(lambda: self.onclick_linkBtn(data.getUrl()[i]))
 
-            self.h_layouts[i].addWidget(img_label)
-            self.h_layouts[i].addWidget(title_label)
-            self.h_layouts[i].addLayout(date_viewcount_layout)
-            self.h_layouts[i].addWidget(link_btn)
+            h_layouts[i].addWidget(img_label)
+            h_layouts[i].addWidget(title_label)
+            h_layouts[i].addLayout(date_viewcount_layout)
+            h_layouts[i].addWidget(link_btn)
 
-        for layout in self.h_layouts:
+        for layout in h_layouts:
             self.vboxLayout.addLayout(layout)
     def onclick_backBtn(self):
         widget.setCurrentWidget(UI.HOME)
-    def onclick_linkBtn(self, url):
-        webbrowser.open(url)
     def onclick_pageBtn(self):
         btn : QPushButton = self.sender()
         i = int(btn.text())
         self.init_articleBox(i)
-
     def onclick_linkBtn(self, url):
         btn : QPushButton = self.sender()
         i = btn.property("id")
