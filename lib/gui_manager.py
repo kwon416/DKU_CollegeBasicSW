@@ -27,23 +27,26 @@ class HomeUI(QDialog):
     def onclick_noticeBtn(self):
         pass
 
-class NewsUI(QDialog):
+class ArticleUI(QDialog):
 
     ARTICLE_COUNT = 10
-    
+
     def __init__(self):
         super().__init__()
         uic.loadUi(UI_DIR + "news.ui", self)
+
         self.backBtn.clicked.connect(self.onclick_backBtn)
         self.pageBtn_1.clicked.connect(self.onclick_pageBtn)
         self.pageBtn_2.clicked.connect(self.onclick_pageBtn)
         self.pageBtn_3.clicked.connect(self.onclick_pageBtn)
         self.pageBtn_4.clicked.connect(self.onclick_pageBtn)
         self.pageBtn_5.clicked.connect(self.onclick_pageBtn)
-        self.init_articleBox(1)
+
+        self.articleIndex = 0
+
     def init_articleBox(self, number):
-        self.data = crawl.CrawlingNews(number)
-        data = self.data
+        self.articleIndex = number
+        data = self.data[number]
 
         QtUtil.clearLayout(self.vboxLayout)
 
@@ -61,7 +64,6 @@ class NewsUI(QDialog):
             title_label.setText(data.getTitle()[i])
             title_label.setFixedSize(350, 40)
 
-
             date_viewcount_layout = QVBoxLayout()  # 날짜/조회수 묶어서 한 레이아웃으로.
 
             date_label = QLabel(data.getDate()[i])
@@ -74,7 +76,6 @@ class NewsUI(QDialog):
             date_viewcount_layout.addWidget(date_label)
             date_viewcount_layout.addWidget(viewcount_label)
 
-
             link_btn = QPushButton("보기")
             link_btn.setFixedSize(40, 40)
             link_btn.clicked.connect(lambda: self.onclick_linkBtn(data.getUrl()[i]))
@@ -86,17 +87,27 @@ class NewsUI(QDialog):
 
         for layout in h_layouts:
             self.vboxLayout.addLayout(layout)
+
     def onclick_backBtn(self):
         widget.setCurrentWidget(UI.HOME)
+
     def onclick_pageBtn(self):
-        btn : QPushButton = self.sender()
-        i = int(btn.text())
+        btn: QPushButton = self.sender()
+        i = int(btn.text()) - 1 # 데이터는 인덱스 기준이니까 1을 뺌
         self.init_articleBox(i)
+
     def onclick_linkBtn(self, url):
-        btn : QPushButton = self.sender()
+        btn: QPushButton = self.sender()
         i = btn.property("id")
-        url = self.data.getUrl()[i]
+        url = self.data[self.articleIndex].getUrl()[i]
         webbrowser.open(url)
+
+class NewsUI(ArticleUI):
+    def __init__(self):
+        super().__init__()
+        self.data = [ crawl.CrawlingNews(i) for i in range(1, 6) ]
+        self.init_articleBox(self.articleIndex)
+
 
 class UI:
     HOME : HomeUI
