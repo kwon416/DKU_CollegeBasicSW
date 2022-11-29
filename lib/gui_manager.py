@@ -23,9 +23,9 @@ class HomeUI(QDialog):
     def onclick_newsBtn(self):
         widget.setCurrentWidget(UI.NEWS)
     def onclick_todayBtn(self):
-        pass
+        widget.setCurrentWidget(UI.TODAY)
     def onclick_noticeBtn(self):
-        pass
+        widget.setCurrentWidget(UI.NOTICE)
 
 class ArticleUI(QDialog):
 
@@ -44,15 +44,15 @@ class ArticleUI(QDialog):
 
         self.articleIndex = 0
 
-    def init_articleBox(self, number):
-        self.articleIndex = number
-        data = self.data[number]
+    def init_articleBox(self, index):
+        self.articleIndex = index
+        data = self.data[index]
 
         QtUtil.clearLayout(self.vboxLayout)
 
         h_layouts = [QHBoxLayout() for i in range(NewsUI.ARTICLE_COUNT)]
 
-        for i in range(NewsUI.ARTICLE_COUNT):
+        for i in range(ArticleUI.ARTICLE_COUNT):
             img_url = data.getImgUrl()[i]
             img_data = urllib.request.urlopen(img_url).read()
             pixmap = QPixmap()
@@ -106,16 +106,32 @@ class NewsUI(ArticleUI):
     def __init__(self):
         super().__init__()
         self.data = [ crawl.CrawlingNews(i) for i in range(1, 6) ]
-        self.init_articleBox(self.articleIndex)
+        self.init_articleBox(0)
+
+class TodayUI(ArticleUI):
+    def __init__(self):
+        super().__init__()
+        self.data = [ crawl.CrawlingToday(i) for i in range(1, 6) ]
+        self.init_articleBox(0)
+
+class NoticeUI(ArticleUI):
+    def __init__(self):
+        super().__init__()
+        self.data = [ crawl.CrawlingNotice(i) for i in range(1, 6) ]
+        self.init_articleBox(0)
 
 
 class UI:
     HOME : HomeUI
     NEWS : NewsUI
+    TODAY : TodayUI
+    NOTICE : NoticeUI
     @staticmethod
     def init():
         UI.HOME = HomeUI()
         UI.NEWS = NewsUI()
+        UI.TODAY = TodayUI()
+        # UI.NOTICE = NoticeUI()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -125,6 +141,8 @@ if __name__ == "__main__":
     widget = QStackedWidget()
     widget.addWidget(UI.HOME)
     widget.addWidget(UI.NEWS)
+    widget.addWidget(UI.TODAY)
+    # widget.addWidget(UI.NOTICE)
 
     widget.setFixedSize(585, 560)
 
