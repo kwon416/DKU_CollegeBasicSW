@@ -79,8 +79,9 @@ class ArticleUI(QDialog):
             date_viewcount_layout.addWidget(viewcount_label)
 
             link_btn = QPushButton("보기")
+            link_btn.setProperty("id", i)
             link_btn.setFixedSize(40, 40)
-            link_btn.clicked.connect(lambda: self.onclick_linkBtn(data.getUrl()[i]))
+            link_btn.clicked.connect(self.onclick_linkBtn)
 
             if self.has_img:
                 h_layouts[i].addWidget(img_label)
@@ -99,7 +100,7 @@ class ArticleUI(QDialog):
         i = int(btn.text()) - 1 # 데이터는 인덱스 기준이니까 1을 뺌
         self.init_articleBox(i)
 
-    def onclick_linkBtn(self, url):
+    def onclick_linkBtn(self):
         btn: QPushButton = self.sender()
         i = btn.property("id")
         url = self.data[self.articleIndex].getUrl()[i]
