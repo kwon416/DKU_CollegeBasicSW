@@ -18,11 +18,8 @@ class CrawlingDku:
         self.viewCountList = []
         self.dateList = []
         self.imgUrlList = []
-        self.getTitle()
-        self.getUrl()
-        self.getViewCount()
-        self.getDate()
-        self.getImgUrl()
+
+
         # self.url = self.url_head + self.url_page + str(pagenum)
         #웹 파싱
         # res = requests.get(self.url, headers=headers)
@@ -30,47 +27,47 @@ class CrawlingDku:
         # self.bs = BeautifulSoup(res.text, 'html.parser')
 
     def getTitle(self):
-        print('------title list------')
+        # print('------title list------')
         # 제목 스크랩
         title_list = self.bs.find_all('div', {'class': 'subject_txt'})
         for i in title_list:
-            print(i.getText())
+            # print(i.getText())
             self.titleList.append(i.getText())
         return self.titleList
 
     def getUrl(self):
-        print('------url list------')
+        # print('------url list------')
         # 게시글 링크 스크랩
         title_link = self.bs.find_all('div', {'class': 'plus'})
         for i in title_link:
-            print(i.a['href'])
+            # print(i.a['href'])
             self.urlList.append(i.a['href'])
         return self.urlList
 
     def getViewCount(self):
-        print('------viewcount list------')
+        # print('------viewcount list------')
         # 게시글 조회수 스크랩
         r_view = self.bs.find_all('p', {'class': 'r_view'})
         for i in r_view:
-            print(i.getText())
+            # print(i.getText())
             self.viewCountList.append(i.getText())
         return self.viewCountList
 
     def getDate(self):
-        print('------date list------')
+        # print('------date list------')
         # 게시글 등록일자 스크랩
         date = self.bs.find_all('p', {'class': 'date'})
         for i in date:
-            print(i.getText())
+            # print(i.getText())
             self.dateList.append(i.getText())
         return self.dateList
 
     def getImgUrl(self):
-        print('------img url list------')
+        # print('------img url list------')
         # 게시글 이미지 url 스크랩
         img_url = self.bs.find_all('div', {'class': 'r_img'})
         for i in img_url:
-            print('https://www.dankook.ac.kr/' + i.img['src'])
+            # print('https://www.dankook.ac.kr/' + i.img['src'])
             self.imgUrlList.append('https://www.dankook.ac.kr/' + i.img['src'])
         return self.imgUrlList
 
@@ -84,48 +81,48 @@ class CrawlingNews(CrawlingDku):
         self.bs = BeautifulSoup(res.text, 'html.parser')
 
     def getTitle(self):
-        print('------title list------')
+        # print('------title list------')
 
         # Dku news 페이지 제목 스크랩
         title_list = self.bs.find_all('div', {'class': 'subject_txt'})
         for i in title_list:
-            print(i.getText())
+            # print(i.getText())
             self.titleList.append(i.getText())
         return self.titleList
 
     def getUrl(self):
-        print('------url list------')
+        # print('------url list------')
         # Dku news 게시글 링크 스크랩
         title_link = self.bs.find_all('div', {'class': 'plus'})
         for i in title_link:
-            print(i.a['href'])
+            # print(i.a['href'])
             self.urlList.append(i.a['href'])
         return self.urlList
 
     def getViewCount(self):
-        print('------viewcount list------')
+        # print('------viewcount list------')
         # Dku news 게시글 조회수 스크랩
         r_view = self.bs.find_all('p', {'class': 'r_view'})
         for i in r_view:
-            print(i.getText())
+            # print(i.getText())
             self.viewCountList.append(i.getText())
         return self.viewCountList
 
     def getDate(self):
-        print('------date list------')
+        # print('------date list------')
         # Dku news 게시글 등록일자 스크랩
         date = self.bs.find_all('p', {'class': 'date'})
         for i in date:
-            print(i.getText())
+            # print(i.getText())
             self.dateList.append(i.getText())
         return self.dateList
 
     def getImgUrl(self):
-        print('------img url list------')
+        # print('------img url list------')
         # Dku news 게시글 이미지 url 스크랩
         img_url = self.bs.find_all('div', {'class': 'r_img'})
         for i in img_url:
-            print('https://www.dankook.ac.kr/' + i.img['src'])
+            # print('https://www.dankook.ac.kr/' + i.img['src'])
             self.imgUrlList.append('https://www.dankook.ac.kr/' + i.img['src'])
         return self.imgUrlList
 
@@ -139,39 +136,39 @@ class CrawlingNotice(CrawlingDku):
         self.bs = BeautifulSoup(res.text, 'html.parser')
 
     def getTitle(self):
-        print('------title list------')
+        # print('------title list------')
         # Dku notice 페이지 제목 스크랩
         title_list = self.bs.find_all('div', {'class': 'subject_txt'})
         for i in title_list:
-            print(i.getText())
+            # print(i.getText())
             self.titleList.append(i.getText())
         return self.titleList
 
     def getUrl(self):
-        print('------url list------')
+        # print('------url list------')
         # Dku notice 게시글 링크 스크랩
         title_link = self.bs.find_all('div', {'class': 'subject'})
         for i in title_link:
-            print(i.a['href'])
+            # print(i.a['href'])
             self.urlList.append(i.a['href'])
         return self.urlList
 
     def getViewCount(self):
-        print('------viewcount list------')
+        # print('------viewcount list------')
         # Dku notice 게시글 조회수 스크랩
         r_view = self.bs.find_all('span', {'class': 'table_hit'})
         for i in r_view:
             i.find('strong').decompose()
-            print(i.getText())
+            # print(i.getText())
             self.viewCountList.append(i.getText())
         return self.viewCountList
     def getDate(self):
-        print('------date list------')
+        # print('------date list------')
         # Dku notice 게시글 등록일자 스크랩
         date = self.bs.find_all('span', {'class': 'table_date'})
         for i in date:
             i.find('strong').decompose()
-            print(i.getText())
+            # print(i.getText())
             self.dateList.append(i.getText())
         return  self.dateList
 
@@ -195,46 +192,46 @@ class CrawlingToday(CrawlingDku):
         self.bs = BeautifulSoup(res.text, 'html.parser')
 
     def getTitle(self):
-        print('------title list------')
+        # print('------title list------')
         # Dku today 페이지 제목 스크랩
         title_list = self.bs.find_all('div', {'class': 'subject_txt'})
         for i in title_list:
-            print(i.getText())
+            # print(i.getText())
             self.titleList.append(i.getText())
         return self.titleList
 
     def getUrl(self):
-        print('------url list------')
+        # print('------url list------')
         # Dku news 게시글 링크 스크랩
         title_link = self.bs.find_all('div', {'class': 'plus'})
         for i in title_link:
-            print(i.a['href'])
+            # print(i.a['href'])
             self.urlList.append(i.a['href'])
         return self.urlList
 
     def getViewCount(self):
-        print('------viewcount list------')
+        # print('------viewcount list------')
         # Dku news 게시글 조회수 스크랩
         r_view = self.bs.find_all('p', {'class': 'r_view'})
         for i in r_view:
-            print(i.getText())
+            # print(i.getText())
             self.viewCountList.append(i.getText())
         return self.viewCountList
 
     def getDate(self):
-        print('------date list------')
+        # print('------date list------')
         # Dku news 게시글 등록일자 스크랩
         date = self.bs.find_all('p', {'class': 'date'})
         for i in date:
-            print(i.getText())
+            # print(i.getText())
             self.dateList.append(i.getText())
         return self.dateList
 
     def getImgUrl(self):
-        print('------img url list------')
+        # print('------img url list------')
         # Dku news 게시글 이미지 url 스크랩
         img_url = self.bs.find_all('div', {'class': 'r_img'})
         for i in img_url:
-            print('https://www.dankook.ac.kr/' + i.img['src'])
+            # print('https://www.dankook.ac.kr/' + i.img['src'])
             self.imgUrlList.append('https://www.dankook.ac.kr/' + i.img['src'])
         return self.imgUrlList
