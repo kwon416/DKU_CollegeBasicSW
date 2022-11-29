@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>464</width>
-    <height>284</height>
+    <width>585</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,39 +17,69 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>60</y>
-     <width>141</width>
-     <height>141</height>
+     <y>170</y>
+     <width>181</width>
+     <height>171</height>
     </rect>
    </property>
    <property name="text">
-    <string>DKU News</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>img/news.png</normaloff>img/news.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>300</width>
+     <height>300</height>
+    </size>
    </property>
   </widget>
   <widget class="QPushButton" name="todayBtn">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>60</y>
-     <width>141</width>
-     <height>141</height>
+     <x>210</x>
+     <y>170</y>
+     <width>171</width>
+     <height>171</height>
     </rect>
    </property>
    <property name="text">
-    <string>DKU Today</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>img/notice.png</normaloff>img/notice.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>300</width>
+     <height>300</height>
+    </size>
    </property>
   </widget>
   <widget class="QPushButton" name="noticeBtn">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>60</y>
-     <width>141</width>
-     <height>141</height>
+     <x>400</x>
+     <y>170</y>
+     <width>171</width>
+     <height>171</height>
     </rect>
    </property>
    <property name="text">
-    <string>DKU Notice</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>img/tday.png</normaloff>img/tday.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>150</width>
+     <height>150</height>
+    </size>
    </property>
   </widget>
  </widget>
