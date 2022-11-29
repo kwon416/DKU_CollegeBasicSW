@@ -42,6 +42,7 @@ class ArticleUI(QDialog):
         self.pageBtn_4.clicked.connect(self.onclick_pageBtn)
         self.pageBtn_5.clicked.connect(self.onclick_pageBtn)
 
+        self.has_img = True
         self.articleIndex = 0
 
     def init_articleBox(self, index):
@@ -53,12 +54,13 @@ class ArticleUI(QDialog):
         h_layouts = [QHBoxLayout() for i in range(NewsUI.ARTICLE_COUNT)]
 
         for i in range(ArticleUI.ARTICLE_COUNT):
-            img_url = data.getImgUrl()[i]
-            img_data = urllib.request.urlopen(img_url).read()
-            pixmap = QPixmap()
-            pixmap.loadFromData(img_data)
-            img_label = QLabel()  # 이미지 레이블
-            img_label.setPixmap(pixmap.scaled(100, 100, Qt.KeepAspectRatio))
+            if self.has_img:
+                img_url = data.getImgUrl()[i]
+                img_data = urllib.request.urlopen(img_url).read()
+                pixmap = QPixmap()
+                pixmap.loadFromData(img_data)
+                img_label = QLabel()  # 이미지 레이블
+                img_label.setPixmap(pixmap.scaled(100, 100, Qt.KeepAspectRatio))
 
             title_label = QLabel()  # 제목 레이블
             title_label.setText(data.getTitle()[i])
@@ -80,7 +82,8 @@ class ArticleUI(QDialog):
             link_btn.setFixedSize(40, 40)
             link_btn.clicked.connect(lambda: self.onclick_linkBtn(data.getUrl()[i]))
 
-            h_layouts[i].addWidget(img_label)
+            if self.has_img:
+                h_layouts[i].addWidget(img_label)
             h_layouts[i].addWidget(title_label)
             h_layouts[i].addLayout(date_viewcount_layout)
             h_layouts[i].addWidget(link_btn)
@@ -117,6 +120,7 @@ class TodayUI(ArticleUI):
 class NoticeUI(ArticleUI):
     def __init__(self):
         super().__init__()
+        self.has_img = False
         self.data = [ crawl.CrawlingNotice(i) for i in range(1, 6) ]
         self.init_articleBox(0)
 
@@ -131,7 +135,7 @@ class UI:
         UI.HOME = HomeUI()
         UI.NEWS = NewsUI()
         UI.TODAY = TodayUI()
-        # UI.NOTICE = NoticeUI()
+        UI.NOTICE = NoticeUI()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -142,7 +146,7 @@ if __name__ == "__main__":
     widget.addWidget(UI.HOME)
     widget.addWidget(UI.NEWS)
     widget.addWidget(UI.TODAY)
-    # widget.addWidget(UI.NOTICE)
+    widget.addWidget(UI.NOTICE)
 
     widget.setFixedSize(585, 560)
 

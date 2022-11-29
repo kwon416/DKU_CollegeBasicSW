@@ -163,7 +163,8 @@ class CrawlingNotice(CrawlingDku):
         # Dku notice 게시글 조회수 스크랩
         r_view = self.bs.find_all('span', {'class': 'table_hit'})
         for i in r_view:
-            i.find('strong').decompose()
+            if i.find('strong'):
+                i.find('strong').decompose()
             print(i.getText())
             result.append(i.getText())
         return result
@@ -173,7 +174,8 @@ class CrawlingNotice(CrawlingDku):
         # Dku notice 게시글 등록일자 스크랩
         date = self.bs.find_all('span', {'class': 'table_date'})
         for i in date:
-            i.find('strong').decompose()
+            if i.find('strong'):
+                i.find('strong').decompose()
             print(i.getText())
             result.append(i.getText())
         return  result
@@ -185,7 +187,7 @@ class CrawlingNotice(CrawlingDku):
     #     img_url = self.bs.find_all('div', {'class': 'r_img'})
     #     for i in img_url:
     #         print('https://www.dankook.ac.kr/' + i.img['src'])
-    #     result.append('https://www.dankook.ac.kr/' + i.img['src'])
+    #         result.append('https://www.dankook.ac.kr/' + i.img['src'])
     #     return result
 
 class CrawlingToday(CrawlingDku):
