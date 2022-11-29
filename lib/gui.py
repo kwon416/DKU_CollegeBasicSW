@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
-import main as crawl
+import crawl
 import urllib.request
 import webbrowser
 import ssl
