@@ -5,20 +5,33 @@
 https://wikidocs.net/35482 ㅡ Qt Designer를 이용한 UI의 제작과 연결
 
 ## 프로젝트 개요
-단국대 홈페이지에서 DKU NEWS, DKU NOTICE, DKU TODAY 정보 스크래핑
+단국대 홈페이지에서 DKU NEWS, DKU NOTICE, DKU TODAY 정보를 스크래핑하여 Python GUI를 활용해 단국대학교의 소식을 모아 볼 수 있는 프로그램 제작.
 
-제목 + 본문 링크 url + 타이틀 이미지
+크롤링 내용: 게시글title + 본문 링크 url + 작성일자 + 조회수 + 게시글 타이틀 이미지
 
-에브리타임 강의 이름 입력 -> 해당 강의 평가 스크래핑
+PyQT GUI로 크롤링 내용 출력
 
-GUI는 PyQt5 라이브러리 활용
+## 사용 tool & Library
+개발 언어: Python 3.10
 
-## 사용 라이브러리
-requests, beautifulsoup4, pyQt5
+IDE 환경:  Pycharm
+
+웹 파싱 & 크롤링: requests, beautifulsoup4
+
+사용자 GUI: pyQt5, QtUtil
+
+웹 리소스 가져오기: urllib, webbrowser
+
+etc: ssl
 
 ## 클래스 구성설명
+크롤링 상위 클래스 : CrawlingDku
 
-## 프로그램 실행 화면
-branch 변경 테스트
-rebase
-123
+크롤링 하위 클래스 : CrawlingNews, CrawlingNotice, CrawlingToday
+
+GUI 최상위 클래스 : QDialog
+
+GUI 하위 UI 클래스 : HomeUI, ArticleUI
+
+ArticleUI 하위 클래스 : NewsUI, TodayUI, NoticeUI
+
